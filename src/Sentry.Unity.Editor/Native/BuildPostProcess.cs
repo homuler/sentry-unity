@@ -57,6 +57,8 @@ namespace Sentry.Unity.Editor.Native
             }
             catch (Exception e)
             {
+                Console.Out.Write(e.Message);
+                Console.Out.Flush();
                 logger.LogError("Failed to add the Sentry native integration to the built application", e);
                 throw new BuildFailedException("Sentry Native BuildPostProcess failed");
             }
@@ -159,7 +161,7 @@ namespace Sentry.Unity.Editor.Native
                         var managedSymbolsDirectory = $"{projectDir}/Temp/ManagedSymbols";
                         if (Directory.Exists(managedSymbolsDirectory))
                         {
-                            addFilesMatching(managedSymbolsDirectory, new[] { "*.pdb" });
+                            addPath($"{managedSymbolsDirectory}/*.pdb");
                         }
                     }
                     else // IL2CPP
